@@ -1,0 +1,104 @@
+//
+//  FavoritesView.swift
+//  OUTFITS
+//
+//  Created by Antoine Gallo on 30/09/2025.
+//
+
+import SwiftUI
+
+struct FavoritesView: View {
+    @EnvironmentObject var wardrobeManager: WardrobeManager
+    @State private var selectedTab = 0
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 0) {
+                // Sélecteur d'onglets
+                Picker("Favoris", selection: $selectedTab) {
+                    Text("Outfits").tag(0)
+                    Text("Articles").tag(1)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                
+                // Contenu
+                TabView(selection: $selectedTab) {
+                    // Outfits favoris
+                    favoriteOutfitsView
+                        .tag(0)
+                    
+                    // Articles favoris (à implémenter si nécessaire)
+                    favoriteItemsView
+                        .tag(1)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            }
+            .navigationTitle("Favoris")
+        }
+    }
+    
+    private var favoriteOutfitsView: some View {
+        Group {
+            if wardrobeManager.favoriteOutfits.isEmpty {
+                emptyFavoritesView
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible())
+                    ], spacing: 16) {
+                        ForEach(wardrobeManager.favoriteOutfits) { outfit in
+                            OutfitCard(outfit: outfit)
+                        }
+                    }
+                    .padding()
+                }
+            }
+        }
+    }
+    
+    private var favoriteItemsView: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "tshirt")
+                .font(.system(size: 60))
+                .foregroundColor(.secondary)
+            
+            Text("Articles favoris")
+                .font(.title2)
+                .fontWeight(.semibold)
+            
+            Text("Cette fonctionnalité sera disponible prochainement")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var emptyFavoritesView: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "heart")
+                .font(.system(size: 60))
+                .foregroundColor(.secondary)
+            
+            Text("Aucun favori")
+                .font(.title2)
+                .fontWeight(.semibold)
+            
+            Text("Marquez vos outfits préférés avec un cœur")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+#Preview {
+    FavoritesView()
+        .environmentObject(WardrobeManager())
+}
+
