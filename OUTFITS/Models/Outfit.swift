@@ -1,10 +1,3 @@
-//
-//  Outfit.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import Foundation
 import SwiftUI
 
@@ -81,4 +74,5 @@ enum Occasion: String, CaseIterable, Codable {
         }
     }
 }
+
 

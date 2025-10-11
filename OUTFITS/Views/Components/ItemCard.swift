@@ -1,10 +1,3 @@
-//
-//  ItemCard.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct ItemCard: View {
@@ -14,7 +7,6 @@ struct ItemCard: View {
     var body: some View {
         Button(action: { showingDetail = true }) {
             VStack(alignment: .leading, spacing: 8) {
-                // Image ou icône
                 if let imageData = item.imageData,
                    let uiImage = UIImage(data: imageData) {
                     Image(uiImage: uiImage)
@@ -35,7 +27,6 @@ struct ItemCard: View {
                     }
                 }
                 
-                // Informations
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.name)
                         .font(.caption)
@@ -90,4 +81,5 @@ struct ItemCard: View {
     return ItemCard(item: sampleItem)
         .padding()
 }
+
 

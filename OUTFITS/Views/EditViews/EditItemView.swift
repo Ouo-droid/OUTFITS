@@ -1,10 +1,3 @@
-//
-//  EditItemView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 import PhotosUI
 
@@ -160,7 +153,6 @@ struct EditItemView: View {
             notes: notes
         )
         
-        // Créer un nouvel item avec le même ID
         var finalItem = updatedItem
         finalItem = Item(
             name: name,
@@ -173,7 +165,6 @@ struct EditItemView: View {
             notes: notes
         )
         
-        // Mettre à jour dans le gestionnaire
         wardrobeManager.updateItem(finalItem)
         dismiss()
     }
@@ -192,4 +183,6 @@ struct EditItemView: View {
     return EditItemView(item: sampleItem)
         .environmentObject(WardrobeManager())
 }
+
+
 

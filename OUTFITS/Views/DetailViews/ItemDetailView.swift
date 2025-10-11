@@ -1,10 +1,3 @@
-//
-//  ItemDetailView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct ItemDetailView: View {
@@ -18,7 +11,6 @@ struct ItemDetailView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Image
                     if let imageData = item.imageData,
                        let uiImage = UIImage(data: imageData) {
                         Image(uiImage: uiImage)
@@ -44,9 +36,7 @@ struct ItemDetailView: View {
                         }
                     }
                     
-                    // Informations
                     VStack(alignment: .leading, spacing: 16) {
-                        // Nom et marque
                         VStack(alignment: .leading, spacing: 8) {
                             Text(item.name)
                                 .font(.title2)
@@ -57,7 +47,6 @@ struct ItemDetailView: View {
                                 .foregroundColor(.secondary)
                         }
                         
-                        // Catégorie et saison
                         HStack(spacing: 20) {
                             InfoBadge(
                                 icon: item.category.icon,
@@ -73,7 +62,6 @@ struct ItemDetailView: View {
                             )
                         }
                         
-                        // Couleur et taille
                         HStack(spacing: 20) {
                             InfoBadge(
                                 icon: "paintpalette",
@@ -89,14 +77,12 @@ struct ItemDetailView: View {
                             )
                         }
                         
-                        // Date d'ajout
                         InfoBadge(
                             icon: "calendar.badge.plus",
                             title: "Ajouté le",
                             value: item.dateAdded.formatted(date: .abbreviated, time: .omitted)
                         )
                         
-                        // Notes
                         if !item.notes.isEmpty {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Notes")
@@ -202,4 +188,6 @@ struct InfoBadge: View {
     return ItemDetailView(item: sampleItem)
         .environmentObject(WardrobeManager())
 }
+
+
 

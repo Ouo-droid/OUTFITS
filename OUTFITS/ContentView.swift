@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  OUTFITS
-//
-//  Created by Antoine  Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -13,7 +6,6 @@ struct ContentView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            // Vue principale - Dashboard
             DashboardView()
                 .environmentObject(wardrobeManager)
                 .tabItem {
@@ -22,7 +14,6 @@ struct ContentView: View {
                 }
                 .tag(0)
             
-            // Vue du dressing
             WardrobeView()
                 .environmentObject(wardrobeManager)
                 .tabItem {
@@ -31,7 +22,6 @@ struct ContentView: View {
                 }
                 .tag(1)
             
-            // Vue des outfits
             OutfitsView()
                 .environmentObject(wardrobeManager)
                 .tabItem {
@@ -40,7 +30,6 @@ struct ContentView: View {
                 }
                 .tag(2)
             
-            // Vue des favoris
             FavoritesView()
                 .environmentObject(wardrobeManager)
                 .tabItem {

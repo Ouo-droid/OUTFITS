@@ -1,10 +1,3 @@
-//
-//  OutfitCard.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct OutfitCard: View {
@@ -14,7 +7,6 @@ struct OutfitCard: View {
     var body: some View {
         Button(action: { showingDetail = true }) {
             VStack(alignment: .leading, spacing: 8) {
-                // Image composite ou placeholder
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(LinearGradient(
@@ -38,7 +30,6 @@ struct OutfitCard: View {
                     }
                 }
                 
-                // Informations
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(outfit.name)
@@ -61,7 +52,6 @@ struct OutfitCard: View {
                         .background(outfit.occasion.color.opacity(0.2))
                         .cornerRadius(4)
                     
-                    // Rating
                     HStack(spacing: 2) {
                         ForEach(1...5, id: \.self) { star in
                             Image(systemName: star <= outfit.rating ? "star.fill" : "star")
@@ -105,4 +95,5 @@ struct OutfitCard: View {
     return OutfitCard(outfit: sampleOutfit)
         .padding()
 }
+
 

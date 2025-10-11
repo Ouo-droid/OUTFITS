@@ -1,10 +1,3 @@
-//
-//  WardrobeView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct WardrobeView: View {
@@ -25,22 +18,18 @@ struct WardrobeView: View {
     var filteredItems: [Item] {
         var items = wardrobeManager.items
         
-        // Filtrage par recherche
         if !searchText.isEmpty {
             items = wardrobeManager.searchItems(query: searchText)
         }
         
-        // Filtrage par catégorie
         if let category = selectedCategory {
             items = items.filter { $0.category == category }
         }
         
-        // Filtrage par saison
         if let season = selectedSeason {
             items = items.filter { $0.season == season || $0.season == .all }
         }
         
-        // Tri
         switch sortOption {
         case .dateAdded:
             items = items.sorted { $0.dateAdded > $1.dateAdded }
@@ -58,10 +47,8 @@ struct WardrobeView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Barre de recherche et filtres
                 searchAndFilterSection
                 
-                // Contenu principal
                 if filteredItems.isEmpty {
                     emptyStateView
                 } else {
@@ -85,7 +72,6 @@ struct WardrobeView: View {
     
     private var searchAndFilterSection: some View {
         VStack(spacing: 12) {
-            // Barre de recherche
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.secondary)
@@ -105,10 +91,8 @@ struct WardrobeView: View {
             .background(Color(.systemGray6))
             .cornerRadius(10)
             
-            // Filtres
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
-                    // Filtre par catégorie
                     Menu {
                         Button("Toutes les catégories") {
                             selectedCategory = nil
@@ -126,7 +110,6 @@ struct WardrobeView: View {
                         )
                     }
                     
-                    // Filtre par saison
                     Menu {
                         Button("Toutes les saisons") {
                             selectedSeason = nil
@@ -144,7 +127,6 @@ struct WardrobeView: View {
                         )
                     }
                     
-                    // Tri
                     Menu {
                         ForEach(SortOption.allCases, id: \.self) { option in
                             Button(option.rawValue) {
@@ -226,4 +208,5 @@ struct FilterChip: View {
     WardrobeView()
         .environmentObject(WardrobeManager())
 }
+
 

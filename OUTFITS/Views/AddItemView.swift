@@ -1,10 +1,3 @@
-//
-//  AddItemView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 import PhotosUI
 
@@ -150,4 +143,5 @@ struct AddItemView: View {
     AddItemView()
         .environmentObject(WardrobeManager())
 }
+
 

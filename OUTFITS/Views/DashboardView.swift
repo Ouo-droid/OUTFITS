@@ -1,10 +1,3 @@
-//
-//  DashboardView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct DashboardView: View {
@@ -16,16 +9,12 @@ struct DashboardView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // En-tête avec statistiques
                     headerSection
                     
-                    // Actions rapides
                     quickActionsSection
                     
-                    // Outfits récents
                     recentOutfitsSection
                     
-                    // Articles récents
                     recentItemsSection
                 }
                 .padding()
@@ -73,7 +62,6 @@ struct DashboardView: View {
                     .foregroundColor(.purple)
             }
             
-            // Statistiques
             HStack(spacing: 20) {
                 StatCard(
                     title: "Articles",
@@ -285,4 +273,3 @@ struct EmptyStateView: View {
     DashboardView()
         .environmentObject(WardrobeManager())
 }
-

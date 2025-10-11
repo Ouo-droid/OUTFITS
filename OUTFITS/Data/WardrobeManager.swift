@@ -1,10 +1,3 @@
-//
-//  WardrobeManager.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import Foundation
 import SwiftUI
 
@@ -20,7 +13,6 @@ class WardrobeManager: ObservableObject {
         loadOutfits()
     }
     
-    // MARK: - Items Management
     
     func addItem(_ item: Item) {
         items.append(item)
@@ -36,7 +28,6 @@ class WardrobeManager: ObservableObject {
     
     func deleteItem(_ item: Item) {
         items.removeAll { $0.id == item.id }
-        // Supprimer l'item de tous les outfits
         for outfit in outfits {
             if outfit.items.contains(where: { $0.id == item.id }) {
                 deleteOutfit(outfit)
@@ -53,7 +44,6 @@ class WardrobeManager: ObservableObject {
         return items.filter { $0.season == season || $0.season == .all }
     }
     
-    // MARK: - Outfits Management
     
     func addOutfit(_ outfit: Outfit) {
         outfits.append(outfit)
@@ -87,7 +77,6 @@ class WardrobeManager: ObservableObject {
         }
     }
     
-    // MARK: - Search and Filter
     
     func searchItems(query: String) -> [Item] {
         if query.isEmpty {
@@ -110,7 +99,6 @@ class WardrobeManager: ObservableObject {
         }
     }
     
-    // MARK: - Statistics
     
     var totalItems: Int {
         return items.count
@@ -130,7 +118,6 @@ class WardrobeManager: ObservableObject {
             .sorted { ($0.lastWorn ?? Date.distantPast) > ($1.lastWorn ?? Date.distantPast) }
     }
     
-    // MARK: - Persistence
     
     private func saveItems() {
         if let encoded = try? JSONEncoder().encode(items) {
@@ -158,4 +145,5 @@ class WardrobeManager: ObservableObject {
         }
     }
 }
+
 

@@ -1,10 +1,3 @@
-//
-//  OutfitDetailView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct OutfitDetailView: View {
@@ -19,16 +12,12 @@ struct OutfitDetailView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // En-tête de l'outfit
                     outfitHeader
                     
-                    // Articles de l'outfit
                     outfitItems
                     
-                    // Informations détaillées
                     outfitDetails
                     
-                    // Actions
                     outfitActions
                 }
                 .padding()
@@ -86,7 +75,6 @@ struct OutfitDetailView: View {
     
     private var outfitHeader: some View {
         VStack(spacing: 16) {
-            // Nom et favori
             HStack {
                 Text(outfit.name)
                     .font(.title2)
@@ -101,13 +89,11 @@ struct OutfitDetailView: View {
                 }
             }
             
-            // Occasion et saison
             HStack(spacing: 12) {
                 OccasionBadge(occasion: outfit.occasion)
                 SeasonBadge(season: outfit.season)
             }
             
-            // Note
             HStack(spacing: 4) {
                 Text("Note:")
                     .font(.subheadline)
@@ -187,7 +173,7 @@ struct OutfitDetailView: View {
             .background(Color(.systemGray6))
             .cornerRadius(8)
             
-            // Notes
+s
             if !outfit.notes.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Notes")
@@ -323,7 +309,6 @@ struct DetailRow: View {
     }
 }
 
-// Vue temporaire pour l'édition d'outfit
 struct EditOutfitView: View {
     let outfit: Outfit
     @EnvironmentObject var wardrobeManager: WardrobeManager

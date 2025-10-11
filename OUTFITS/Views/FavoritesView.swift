@@ -1,10 +1,3 @@
-//
-//  FavoritesView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct FavoritesView: View {
@@ -14,7 +7,6 @@ struct FavoritesView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Sélecteur d'onglets
                 Picker("Favoris", selection: $selectedTab) {
                     Text("Outfits").tag(0)
                     Text("Articles").tag(1)
@@ -22,13 +14,10 @@ struct FavoritesView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
                 
-                // Contenu
                 TabView(selection: $selectedTab) {
-                    // Outfits favoris
                     favoriteOutfitsView
                         .tag(0)
                     
-                    // Articles favoris (à implémenter si nécessaire)
                     favoriteItemsView
                         .tag(1)
                 }

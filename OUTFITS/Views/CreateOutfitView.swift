@@ -1,10 +1,3 @@
-//
-//  CreateOutfitView.swift
-//  OUTFITS
-//
-//  Created by Antoine Gallo on 30/09/2025.
-//
-
 import SwiftUI
 
 struct CreateOutfitView: View {
@@ -30,7 +23,6 @@ struct CreateOutfitView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Informations de base
                 Form {
                     Section("Informations de l'outfit") {
                         TextField("Nom de l'outfit", text: $outfitName)
@@ -84,7 +76,6 @@ struct CreateOutfitView: View {
                 
                 Divider()
                 
-                // Sélection des articles
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("Articles sélectionnés")
@@ -122,7 +113,6 @@ struct CreateOutfitView: View {
                 
                 Divider()
                 
-                // Filtre par catégorie
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Choisir des articles")
                         .font(.headline)
@@ -147,7 +137,6 @@ struct CreateOutfitView: View {
                     }
                 }
                 
-                // Liste des articles disponibles
                 ScrollView {
                     LazyVGrid(columns: [
                         GridItem(.flexible()),
@@ -319,4 +308,6 @@ struct CategoryFilterButton: ButtonStyle {
     CreateOutfitView()
         .environmentObject(WardrobeManager())
 }
+
+
 
