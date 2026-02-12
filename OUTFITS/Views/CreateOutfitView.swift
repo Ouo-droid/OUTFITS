@@ -169,7 +169,8 @@ struct CreateOutfitView: View {
                         Text("Annuler")
                     }
                 }
-                
+            }
+            .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
                         createOutfit()

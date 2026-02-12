@@ -182,26 +182,6 @@ struct EditItemView: View {
     }
     
     private func saveChanges() {
-        // Create a new item but keep the original ID by using the init directly?
-        // Or rather, the model doesn't seem to expose ID in init properly if it auto-generates.
-        // Let's look at WardrobeManager.updateItem logic.
-        // It matches by ID. Since Item is a struct and we are creating a "new" Item here,
-        // we might lose the original ID if the init generates a new one.
-        // Let's check Item model definition.
-
-        // Assuming Item struct has an id property that we should preserve.
-        // The original code was:
-        /*
-        let updatedItem = Item(
-            name: name,
-            brand: brand,
-            ...
-        )
-        wardrobeManager.updateItem(updatedItem)
-        */
-        // If Item() generates a new UUID, then updateItem won't find the original item to update.
-        // Let's fix this by manually copying the ID from the original item.
-        
         var updatedItem = Item(
             name: name,
             brand: brand,
@@ -213,32 +193,7 @@ struct EditItemView: View {
             notes: notes
         )
         
-        // Force the ID to match the original item
-        // This requires Item to have a mutable id or a constructor that accepts it.
-        // Let's assume for now we can't change it easily without seeing Item.swift again.
-        // But since I am editing EditItemView, I should check Item.swift first if I want to be 100% sure.
-        // However, the previous code also just created a new Item, implying updateItem might handle it
-        // OR Item has an init that takes ID (which I don't see in AddItemView usage)
-        // OR the previous code was actually buggy/incomplete regarding ID preservation.
-
-        // Wait, looking at the previous file content provided in context:
-        // The previous code in EditItemView.swift was:
-        /*
-        let updatedItem = Item(name: ..., ...)
-        var finalItem = updatedItem
-        finalItem = Item(name: ..., ...) // It was doing it twice? Weird.
-        wardrobeManager.updateItem(finalItem)
-        */
-
-        // Let's look at WardrobeManager.swift again from my memory/context.
-        // func updateItem(_ item: Item) { if let index = items.firstIndex(where: { $0.id == item.id }) ... }
-        // So ID must match.
-
-        // If I create a new Item(), it gets a new UUID.
-        // I need to preserve the ID.
-        // Let's check MODELS.md again. "id: Identifiant unique généré automatiquement".
-
-        // I will use a workaround: modify the id of the new item to match the old one.
+        // Preserve the original ID to update the existing record
         updatedItem.id = item.id
 
         wardrobeManager.updateItem(updatedItem)
