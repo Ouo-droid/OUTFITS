@@ -161,19 +161,15 @@ struct CreateOutfitView: View {
             }
             .navigationTitle("Nouvel outfit")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Annuler") {
-                        dismiss()
-                    }
+            .navigationBarItems(
+                leading: Button("Annuler") {
+                    dismiss()
+                },
+                trailing: Button("Créer") {
+                    createOutfit()
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Créer") {
-                        createOutfit()
-                    }
-                    .disabled(outfitName.isEmpty || selectedItems.isEmpty)
-                }
-            }
+                .disabled(outfitName.isEmpty || selectedItems.isEmpty)
+            )
         }
     }
     

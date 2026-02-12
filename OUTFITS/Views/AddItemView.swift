@@ -108,20 +108,15 @@ struct AddItemView: View {
             }
             .navigationTitle("Nouvel article")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Annuler") {
-                        dismiss()
-                    }
+            .navigationBarItems(
+                leading: Button("Annuler") {
+                    dismiss()
+                },
+                trailing: Button("Sauvegarder") {
+                    saveItem()
                 }
-                
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Sauvegarder") {
-                        saveItem()
-                    }
-                    .disabled(name.isEmpty || brand.isEmpty)
-                }
-            }
+                .disabled(name.isEmpty || brand.isEmpty)
+            )
         }
         .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
             Button("Prendre une photo") {

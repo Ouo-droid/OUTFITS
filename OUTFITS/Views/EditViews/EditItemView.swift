@@ -127,20 +127,15 @@ struct EditItemView: View {
             }
             .navigationTitle("Modifier l'article")
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Annuler") {
-                        dismiss()
-                    }
+            .navigationBarItems(
+                leading: Button("Annuler") {
+                    dismiss()
+                },
+                trailing: Button("Sauvegarder") {
+                    saveChanges()
                 }
-                
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Sauvegarder") {
-                        saveChanges()
-                    }
-                    .disabled(name.isEmpty || brand.isEmpty)
-                }
-            }
+                .disabled(name.isEmpty || brand.isEmpty)
+            )
         }
         .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
             Button("Prendre une photo") {
