@@ -68,7 +68,8 @@ struct CreateOutfitView: View {
                     }
                     
                     Section("Notes") {
-                        TextField("Notes (optionnel)", text: $notes)
+                        TextField("Notes (optionnel)", text: $notes, axis: .vertical)
+                            .lineLimit(3...6)
                     }
                 }
                 .frame(height: 300)
@@ -160,15 +161,25 @@ struct CreateOutfitView: View {
             }
             .navigationTitle("Nouvel outfit")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("Annuler") {
-                    dismiss()
-                },
-                trailing: Button("Créer") {
-                    createOutfit()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Text("Annuler")
+                    }
                 }
-                .disabled(outfitName.isEmpty || selectedItems.isEmpty)
-            )
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        createOutfit()
+                    }) {
+                        Text("Créer")
+                    }
+                    .disabled(outfitName.isEmpty || selectedItems.isEmpty)
+                }
+            }
         }
     }
     

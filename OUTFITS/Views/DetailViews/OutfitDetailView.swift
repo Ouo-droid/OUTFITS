@@ -78,7 +78,7 @@ struct OutfitDetailView: View {
             HStack {
                 Text(outfit.name)
                     .font(.title2)
-                    .fontWeight(.bold)
+
                 
                 Spacer()
                 
@@ -115,7 +115,7 @@ struct OutfitDetailView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Articles (\(outfit.totalItems))")
                 .font(.headline)
-                .fontWeight(.semibold)
+
             
             if outfit.items.isEmpty {
                 Text("Aucun article dans cet outfit")
@@ -143,7 +143,7 @@ struct OutfitDetailView: View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Informations")
                 .font(.headline)
-                .fontWeight(.semibold)
+
             
             VStack(spacing: 12) {
                 DetailRow(
@@ -173,12 +173,12 @@ struct OutfitDetailView: View {
             .background(Color(.systemGray6))
             .cornerRadius(8)
             
-
+s
             if !outfit.notes.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Notes")
                         .font(.headline)
-                        .fontWeight(.semibold)
+
                     
                     Text(outfit.notes)
                         .font(.body)
@@ -214,7 +214,7 @@ struct OccasionBadge: View {
             
             Text(occasion.rawValue)
                 .font(.caption)
-                .fontWeight(.medium)
+
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
@@ -234,7 +234,7 @@ struct SeasonBadge: View {
             
             Text(season.rawValue)
                 .font(.caption)
-                .fontWeight(.medium)
+
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
@@ -303,7 +303,7 @@ struct DetailRow: View {
             
             Text(value)
                 .font(.subheadline)
-                .fontWeight(.medium)
+
                 .foregroundColor(valueColor)
         }
     }

@@ -121,20 +121,26 @@ struct EditItemView: View {
                 }
                 
                 Section("Notes") {
-                    TextField("Notes (optionnel)", text: $notes)
+                    TextField("Notes (optionnel)", text: $notes, axis: .vertical)
+                        .lineLimit(3...6)
                 }
             }
             .navigationTitle("Modifier l'article")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button("Annuler") {
-                    dismiss()
-                },
-                trailing: Button("Sauvegarder") {
-                    saveChanges()
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Annuler") {
+                        dismiss()
+                    }
                 }
-                .disabled(name.isEmpty || brand.isEmpty)
-            )
+
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Sauvegarder") {
+                        saveChanges()
+                    }
+                    .disabled(name.isEmpty || brand.isEmpty)
+                }
+            }
         }
         .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
             Button("Prendre une photo") {

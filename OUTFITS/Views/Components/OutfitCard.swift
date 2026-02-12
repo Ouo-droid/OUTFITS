@@ -33,7 +33,8 @@ struct OutfitCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack {
                         Text(outfit.name)
-                            .font(.caption.weight(.medium))
+                            .font(.caption)
+
                             .lineLimit(1)
                         
                         if outfit.isFavorite {

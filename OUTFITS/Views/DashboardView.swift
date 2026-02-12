@@ -51,7 +51,7 @@ struct DashboardView: View {
                 VStack(alignment: .leading) {
                     Text("Bonjour !")
                         .font(.title2)
-                        .fontWeight(.bold)
+
                     Text("Organisez votre style")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -94,7 +94,7 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Actions rapides")
                 .font(.headline)
-                .fontWeight(.semibold)
+
             
             HStack(spacing: 12) {
                 QuickActionButton(
@@ -121,7 +121,7 @@ struct DashboardView: View {
             HStack {
                 Text("Outfits récents")
                     .font(.headline)
-                    .fontWeight(.semibold)
+
                 Spacer()
                 NavigationLink("Voir tout") {
                     OutfitsView()
@@ -155,7 +155,7 @@ struct DashboardView: View {
             HStack {
                 Text("Articles récents")
                     .font(.headline)
-                    .fontWeight(.semibold)
+
                 Spacer()
                 NavigationLink("Voir tout") {
                     WardrobeView()
@@ -199,7 +199,7 @@ struct StatCard: View {
             
             Text(value)
                 .font(.title2)
-                .fontWeight(.bold)
+
             
             Text(title)
                 .font(.caption)
@@ -227,7 +227,7 @@ struct QuickActionButton: View {
                 
                 Text(title)
                     .font(.caption)
-                    .fontWeight(.medium)
+
                     .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity)
@@ -255,7 +255,7 @@ struct EmptyStateView: View {
             
             Text(title)
                 .font(.headline)
-                .fontWeight(.semibold)
+
             
             Text(subtitle)
                 .font(.subheadline)

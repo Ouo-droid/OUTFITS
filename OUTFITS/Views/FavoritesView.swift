@@ -55,7 +55,7 @@ struct FavoritesView: View {
             
             Text("Articles favoris")
                 .font(.title2)
-                .fontWeight(.semibold)
+
             
             Text("Cette fonctionnalité sera disponible prochainement")
                 .font(.subheadline)
@@ -74,7 +74,7 @@ struct FavoritesView: View {
             
             Text("Aucun favori")
                 .font(.title2)
-                .fontWeight(.semibold)
+
             
             Text("Marquez vos outfits préférés avec un cœur")
                 .font(.subheadline)

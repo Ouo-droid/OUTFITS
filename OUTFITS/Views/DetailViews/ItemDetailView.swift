@@ -40,7 +40,7 @@ struct ItemDetailView: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(item.name)
                                 .font(.title2)
-                                .fontWeight(.bold)
+
                             
                             Text(item.brand)
                                 .font(.title3)
@@ -87,7 +87,7 @@ struct ItemDetailView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Notes")
                                     .font(.headline)
-                                    .fontWeight(.semibold)
+
                                 
                                 Text(item.notes)
                                     .font(.body)
@@ -168,7 +168,7 @@ struct InfoBadge: View {
             
             Text(value)
                 .font(.subheadline)
-                .fontWeight(.medium)
+
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
