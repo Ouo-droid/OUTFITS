@@ -15,6 +15,10 @@ struct AddItemView: View {
     @State private var selectedPhoto: PhotosPickerItem?
     @State private var imageData: Data?
     @State private var showingImagePicker = false
+    @State private var showingCamera = false
+    @State private var showingActionSheet = false
+    @State private var inputImage: UIImage?
+    @State private var isProcessingImage = false
     
     private let commonColors = ["Blanc", "Noir", "Rouge", "Bleu", "Vert", "Jaune", "Rose", "Violet", "Orange", "Marron", "Gris", "Beige"]
     private let commonSizes = ["XS", "S", "M", "L", "XL", "XXL", "36", "38", "40", "42", "44", "46", "48"]
@@ -72,21 +76,30 @@ struct AddItemView: View {
                 }
                 
                 Section("Photo") {
-                    if let imageData = imageData,
-                       let uiImage = UIImage(data: imageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxHeight: 200)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                showingImagePicker = true
+                    ZStack {
+                        if let imageData = imageData,
+                           let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxHeight: 200)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    showingActionSheet = true
+                                }
+                        } else {
+                            Button("Ajouter une photo") {
+                                showingActionSheet = true
                             }
-                    } else {
-                        Button("Ajouter une photo") {
-                            showingImagePicker = true
+                            .foregroundColor(.purple)
                         }
-                        .foregroundColor(.purple)
+
+                        if isProcessingImage {
+                            Color.black.opacity(0.4)
+                                .cornerRadius(8)
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        }
                     }
                 }
                 
@@ -112,11 +125,46 @@ struct AddItemView: View {
                 }
             }
         }
+        .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
+            Button("Prendre une photo") {
+                showingCamera = true
+            }
+            Button("Choisir dans la bibliothèque") {
+                showingImagePicker = true
+            }
+            Button("Annuler", role: .cancel) { }
+        }
+        .sheet(isPresented: $showingCamera) {
+            CameraView(image: $inputImage)
+        }
         .photosPicker(isPresented: $showingImagePicker, selection: $selectedPhoto, matching: .images)
         .onChange(of: selectedPhoto) { _, newValue in
             Task {
                 if let data = try? await newValue?.loadTransferable(type: Data.self) {
                     imageData = data
+                }
+            }
+        }
+        .onChange(of: inputImage) { _, newImage in
+            guard let image = newImage else { return }
+            processImage(image)
+        }
+    }
+
+    private func processImage(_ image: UIImage) {
+        isProcessingImage = true
+        Task {
+            if let processedImage = await ImageProcessor.removeBackground(from: image),
+               let data = processedImage.pngData() {
+                await MainActor.run {
+                    self.imageData = data
+                    self.isProcessingImage = false
+                }
+            } else if let data = image.jpegData(compressionQuality: 0.8) {
+                // Fallback to original image if processing fails
+                await MainActor.run {
+                    self.imageData = data
+                    self.isProcessingImage = false
                 }
             }
         }
