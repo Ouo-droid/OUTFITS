@@ -173,7 +173,7 @@ struct OutfitDetailView: View {
             .background(Color(.systemGray6))
             .cornerRadius(8)
             
-s
+
             if !outfit.notes.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Notes")

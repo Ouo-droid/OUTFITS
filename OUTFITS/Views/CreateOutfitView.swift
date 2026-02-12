@@ -162,20 +162,14 @@ struct CreateOutfitView: View {
             .navigationTitle("Nouvel outfit")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Annuler") {
                         dismiss()
-                    }) {
-                        Text("Annuler")
                     }
                 }
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Créer") {
                         createOutfit()
-                    }) {
-                        Text("Créer")
                     }
                     .disabled(outfitName.isEmpty || selectedItems.isEmpty)
                 }
