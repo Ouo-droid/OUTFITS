@@ -346,7 +346,7 @@ struct EditOutfitView: View {
     }
 }
 
-#Preview {
+struct OutfitDetailView_Previews: PreviewProvider { static var previews: some View {
     let sampleOutfit = Outfit(
         name: "Look décontracté",
         items: [],
@@ -358,4 +358,6 @@ struct EditOutfitView: View {
     
     return OutfitDetailView(outfit: sampleOutfit)
         .environmentObject(WardrobeManager())
+}
+
 }

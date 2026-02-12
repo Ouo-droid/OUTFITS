@@ -204,9 +204,11 @@ struct FilterChip: View {
     }
 }
 
-#Preview {
+struct WardrobeView_Previews: PreviewProvider { static var previews: some View {
     WardrobeView()
         .environmentObject(WardrobeManager())
 }
 
 
+
+}

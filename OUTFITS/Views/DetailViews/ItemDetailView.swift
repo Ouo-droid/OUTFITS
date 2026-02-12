@@ -174,7 +174,7 @@ struct InfoBadge: View {
     }
 }
 
-#Preview {
+struct ItemDetailView_Previews: PreviewProvider { static var previews: some View {
     let sampleItem = Item(
         name: "T-shirt blanc",
         brand: "Zara",
@@ -191,3 +191,5 @@ struct InfoBadge: View {
 
 
 
+
+}

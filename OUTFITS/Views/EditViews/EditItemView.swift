@@ -170,7 +170,7 @@ struct EditItemView: View {
     }
 }
 
-#Preview {
+struct EditItemView_Previews: PreviewProvider { static var previews: some View {
     let sampleItem = Item(
         name: "T-shirt blanc",
         brand: "Zara",
@@ -186,3 +186,5 @@ struct EditItemView: View {
 
 
 
+
+}

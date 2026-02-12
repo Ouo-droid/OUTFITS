@@ -1,18 +1,19 @@
 import SwiftUI
 import UIKit
 
-struct CameraView: UIViewControllerRepresentable {
+struct ImagePicker: UIViewControllerRepresentable {
     @Binding var image: UIImage?
+    var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @Environment(\.dismiss) var dismiss
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
 
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = .camera
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            picker.sourceType = sourceType
         } else {
-            print("Camera not available, falling back to photo library")
+            // Fallback
             picker.sourceType = .photoLibrary
         }
 
@@ -27,9 +28,9 @@ struct CameraView: UIViewControllerRepresentable {
     }
 
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        let parent: CameraView
+        let parent: ImagePicker
 
-        init(_ parent: CameraView) {
+        init(_ parent: ImagePicker) {
             self.parent = parent
         }
 

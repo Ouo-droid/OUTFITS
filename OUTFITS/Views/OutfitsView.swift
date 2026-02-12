@@ -191,9 +191,11 @@ struct OutfitsView: View {
     }
 }
 
-#Preview {
+struct OutfitsView_Previews: PreviewProvider { static var previews: some View {
     OutfitsView()
         .environmentObject(WardrobeManager())
 }
 
 
+
+}

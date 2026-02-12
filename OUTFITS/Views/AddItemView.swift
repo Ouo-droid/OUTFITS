@@ -1,5 +1,4 @@
 import SwiftUI
-import PhotosUI
 
 struct AddItemView: View {
     @EnvironmentObject var wardrobeManager: WardrobeManager
@@ -12,13 +11,12 @@ struct AddItemView: View {
     @State private var size = ""
     @State private var season = Season.all
     @State private var notes = ""
-    @State private var selectedPhoto: PhotosPickerItem?
     @State private var imageData: Data?
     @State private var showingImagePicker = false
-    @State private var showingCamera = false
     @State private var showingActionSheet = false
     @State private var inputImage: UIImage?
     @State private var isProcessingImage = false
+    @State private var imageSourceType: UIImagePickerController.SourceType = .photoLibrary
     
     private let commonColors = ["Blanc", "Noir", "Rouge", "Bleu", "Vert", "Jaune", "Rose", "Violet", "Orange", "Marron", "Gris", "Beige"]
     private let commonSizes = ["XS", "S", "M", "L", "XL", "XXL", "36", "38", "40", "42", "44", "46", "48"]
@@ -127,25 +125,19 @@ struct AddItemView: View {
         }
         .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
             Button("Prendre une photo") {
-                showingCamera = true
+                imageSourceType = .camera
+                showingImagePicker = true
             }
             Button("Choisir dans la bibliothèque") {
+                imageSourceType = .photoLibrary
                 showingImagePicker = true
             }
             Button("Annuler", role: .cancel) { }
         }
-        .sheet(isPresented: $showingCamera) {
-            CameraView(image: $inputImage)
+        .sheet(isPresented: $showingImagePicker) {
+            ImagePicker(image: $inputImage, sourceType: imageSourceType)
         }
-        .photosPicker(isPresented: $showingImagePicker, selection: $selectedPhoto, matching: .images)
-        .onChange(of: selectedPhoto) { _, newValue in
-            Task {
-                if let data = try? await newValue?.loadTransferable(type: Data.self) {
-                    imageData = data
-                }
-            }
-        }
-        .onChange(of: inputImage) { _, newImage in
+        .onChange(of: inputImage) { newImage in
             guard let image = newImage else { return }
             processImage(image)
         }
@@ -187,9 +179,9 @@ struct AddItemView: View {
     }
 }
 
-#Preview {
-    AddItemView()
-        .environmentObject(WardrobeManager())
+struct AddItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        AddItemView()
+            .environmentObject(WardrobeManager())
+    }
 }
-
-

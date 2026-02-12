@@ -269,7 +269,9 @@ struct EmptyStateView: View {
     }
 }
 
-#Preview {
+struct DashboardView_Previews: PreviewProvider { static var previews: some View {
     DashboardView()
         .environmentObject(WardrobeManager())
+}
+
 }
