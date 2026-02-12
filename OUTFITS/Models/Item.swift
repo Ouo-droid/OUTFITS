@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct Item: Identifiable, Codable, Hashable {
-    let id = UUID()
+    var id = UUID()
     var name: String
     var brand: String
     var category: ItemCategory
