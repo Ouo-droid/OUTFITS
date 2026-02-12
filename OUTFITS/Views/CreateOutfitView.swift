@@ -68,8 +68,7 @@ struct CreateOutfitView: View {
                     }
                     
                     Section("Notes") {
-                        TextField("Notes (optionnel)", text: $notes, axis: .vertical)
-                            .lineLimit(3...6)
+                        TextField("Notes (optionnel)", text: $notes)
                     }
                 }
                 .frame(height: 300)

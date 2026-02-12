@@ -121,8 +121,7 @@ struct EditItemView: View {
                 }
                 
                 Section("Notes") {
-                    TextField("Notes (optionnel)", text: $notes, axis: .vertical)
-                        .lineLimit(3...6)
+                    TextField("Notes (optionnel)", text: $notes)
                 }
             }
             .navigationTitle("Modifier l'article")

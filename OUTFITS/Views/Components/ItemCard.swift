@@ -29,8 +29,7 @@ struct ItemCard: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.name)
-                        .font(.caption)
-                        .fontWeight(.medium)
+                        .font(.caption.weight(.medium))
                         .lineLimit(1)
                     
                     Text(item.brand)

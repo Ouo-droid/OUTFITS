@@ -154,8 +154,7 @@ struct WardrobeView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun article trouvé")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title2.weight(.semibold))
             
             Text("Ajoutez votre premier article à votre dressing")
                 .font(.subheadline)
@@ -194,8 +193,7 @@ struct FilterChip: View {
     
     var body: some View {
         Text(title)
-            .font(.caption)
-            .fontWeight(.medium)
+            .font(.caption.weight(.medium))
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(isSelected ? Color.purple : Color(.systemGray5))

@@ -158,8 +158,7 @@ struct OutfitsView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun outfit trouvé")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title2.weight(.semibold))
             
             Text("Créez votre premier outfit !")
                 .font(.subheadline)
