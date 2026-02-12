@@ -77,7 +77,7 @@ struct OutfitDetailView: View {
         VStack(spacing: 16) {
             HStack {
                 Text(outfit.name)
-                    .font(.title2)
+                    .font(.title2.bold())
 
                 
                 Spacer()
@@ -114,7 +114,7 @@ struct OutfitDetailView: View {
     private var outfitItems: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Articles (\(outfit.totalItems))")
-                .font(.headline)
+                .font(.headline.bold())
 
             
             if outfit.items.isEmpty {
@@ -142,7 +142,7 @@ struct OutfitDetailView: View {
     private var outfitDetails: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Informations")
-                .font(.headline)
+                .font(.headline.bold())
 
             
             VStack(spacing: 12) {
@@ -177,7 +177,7 @@ s
             if !outfit.notes.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Notes")
-                        .font(.headline)
+                        .font(.headline.bold())
 
                     
                     Text(outfit.notes)
@@ -263,7 +263,7 @@ struct OutfitItemCard: View {
                         .frame(width: 80, height: 80)
                     
                     Image(systemName: item.category.icon)
-                        .font(.title2)
+                        .font(.title2.bold())
                         .foregroundColor(.secondary)
                 }
             }
@@ -318,7 +318,7 @@ struct EditOutfitView: View {
         NavigationView {
             VStack {
                 Text("Modification d'outfit")
-                    .font(.title)
+                    .font(.title.bold())
                     .padding()
                 
                 Text("Cette fonctionnalité sera disponible prochainement")

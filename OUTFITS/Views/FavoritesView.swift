@@ -34,7 +34,7 @@ struct FavoritesView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: [
-                        GridItem(.flexible()),
+                        GridItem(.flexible())
                         GridItem(.flexible())
                     ], spacing: 16) {
                         ForEach(wardrobeManager.favoriteOutfits) { outfit in
@@ -54,7 +54,7 @@ struct FavoritesView: View {
                 .foregroundColor(.secondary)
             
             Text("Articles favoris")
-                .font(.title2)
+                .font(.title2.bold())
 
             
             Text("Cette fonctionnalité sera disponible prochainement")
@@ -73,7 +73,7 @@ struct FavoritesView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun favori")
-                .font(.title2)
+                .font(.title2.bold())
 
             
             Text("Marquez vos outfits préférés avec un cœur")

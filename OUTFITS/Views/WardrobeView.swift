@@ -154,7 +154,7 @@ struct WardrobeView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun article trouvé")
-                .font(.title2)
+                .font(.title2.bold())
 
             
             Text("Ajoutez votre premier article à votre dressing")

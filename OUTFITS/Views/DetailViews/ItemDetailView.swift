@@ -39,7 +39,7 @@ struct ItemDetailView: View {
                     VStack(alignment: .leading, spacing: 16) {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(item.name)
-                                .font(.title2)
+                                .font(.title2.bold())
 
                             
                             Text(item.brand)
@@ -86,7 +86,7 @@ struct ItemDetailView: View {
                         if !item.notes.isEmpty {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Notes")
-                                    .font(.headline)
+                                    .font(.headline.bold())
 
                                 
                                 Text(item.notes)

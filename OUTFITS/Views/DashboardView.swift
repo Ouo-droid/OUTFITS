@@ -50,7 +50,7 @@ struct DashboardView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Bonjour !")
-                        .font(.title2)
+                        .font(.title2.bold())
 
                     Text("Organisez votre style")
                         .font(.subheadline)
@@ -58,7 +58,7 @@ struct DashboardView: View {
                 }
                 Spacer()
                 Image(systemName: "sparkles")
-                    .font(.title)
+                    .font(.title.bold())
                     .foregroundColor(.purple)
             }
             
@@ -93,7 +93,7 @@ struct DashboardView: View {
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Actions rapides")
-                .font(.headline)
+                .font(.headline.bold())
 
             
             HStack(spacing: 12) {
@@ -120,7 +120,7 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Outfits récents")
-                    .font(.headline)
+                    .font(.headline.bold())
 
                 Spacer()
                 NavigationLink("Voir tout") {
@@ -154,7 +154,7 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Articles récents")
-                    .font(.headline)
+                    .font(.headline.bold())
 
                 Spacer()
                 NavigationLink("Voir tout") {
@@ -194,11 +194,11 @@ struct StatCard: View {
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: icon)
-                .font(.title2)
+                .font(.title2.bold())
                 .foregroundColor(color)
             
             Text(value)
-                .font(.title2)
+                .font(.title2.bold())
 
             
             Text(title)
@@ -222,7 +222,7 @@ struct QuickActionButton: View {
         Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: icon)
-                    .font(.title2)
+                    .font(.title2.bold())
                     .foregroundColor(color)
                 
                 Text(title)
@@ -254,7 +254,7 @@ struct EmptyStateView: View {
                 .foregroundColor(.secondary)
             
             Text(title)
-                .font(.headline)
+                .font(.headline.bold())
 
             
             Text(subtitle)

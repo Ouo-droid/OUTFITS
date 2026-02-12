@@ -21,7 +21,7 @@ struct OutfitCard: View {
                     
                     VStack(spacing: 4) {
                         Image(systemName: outfit.occasion.icon)
-                            .font(.title2)
+                            .font(.title2.bold())
                             .foregroundColor(outfit.occasion.color)
                         
                         Text("\(outfit.totalItems) articles")

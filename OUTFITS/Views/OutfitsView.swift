@@ -158,7 +158,7 @@ struct OutfitsView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun outfit trouvé")
-                .font(.title2)
+                .font(.title2.bold())
 
             
             Text("Créez votre premier outfit !")
@@ -179,7 +179,7 @@ struct OutfitsView: View {
     private var outfitsGrid: some View {
         ScrollView {
             LazyVGrid(columns: [
-                GridItem(.flexible()),
+                GridItem(.flexible())
                 GridItem(.flexible())
             ], spacing: 16) {
                 ForEach(filteredOutfits) { outfit in
