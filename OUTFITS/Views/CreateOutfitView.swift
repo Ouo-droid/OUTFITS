@@ -80,7 +80,7 @@ struct CreateOutfitView: View {
                     HStack {
                         Text("Articles sélectionnés")
                             .font(.headline)
-                            .fontWeight(.semibold)
+                            // .fontWeight(.semibold) iOS 16+
                         
                         Spacer()
                         
@@ -116,7 +116,7 @@ struct CreateOutfitView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Choisir des articles")
                         .font(.headline)
-                        .fontWeight(.semibold)
+                        // .fontWeight(.semibold) iOS 16+
                         .padding(.horizontal)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -163,14 +163,18 @@ struct CreateOutfitView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Annuler") {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Text("Annuler")
                     }
                 }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Créer") {
+                    Button(action: {
                         createOutfit()
+                    }) {
+                        Text("Créer")
                     }
                     .disabled(outfitName.isEmpty || selectedItems.isEmpty)
                 }
@@ -293,8 +297,7 @@ struct CategoryFilterButton: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.caption)
-            .fontWeight(.medium)
+            .font(.system(size: 12, weight: .medium)) // Replaces .font(.caption).fontWeight(.medium)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(isSelected ? Color.purple : Color(.systemGray5))
