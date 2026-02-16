@@ -1,4 +1,5 @@
 import SwiftUI
+import PhotosUI
 
 struct EditItemView: View {
     let item: Item
@@ -13,11 +14,12 @@ struct EditItemView: View {
     @State private var season: Season
     @State private var notes: String
     @State private var imageData: Data?
-    @State private var showingImagePicker = false
+    @State private var showingCamera = false
     @State private var showingActionSheet = false
     @State private var inputImage: UIImage?
+    @State private var selectedPhoto: PhotosPickerItem?
     @State private var isProcessingImage = false
-    @State private var imageSourceType: UIImagePickerController.SourceType = .photoLibrary
+    @State private var showingPhotosPicker = false
     
     private let commonColors = ["Blanc", "Noir", "Rouge", "Bleu", "Vert", "Jaune", "Rose", "Violet", "Orange", "Marron", "Gris", "Beige"]
     private let commonSizes = ["XS", "S", "M", "L", "XL", "XXL", "36", "38", "40", "42", "44", "46", "48"]
@@ -35,7 +37,7 @@ struct EditItemView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Informations générales") {
                     TextField("Nom de l'article", text: $name)
@@ -59,7 +61,7 @@ struct EditItemView: View {
                                 Circle()
                                     .fill(season.color)
                                     .frame(width: 12, height: 12)
-                                Text(season.rawValue)
+                                    Text(season.rawValue)
                             }
                             .tag(season)
                         }
@@ -128,13 +130,13 @@ struct EditItemView: View {
             .navigationTitle("Modifier l'article")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Annuler") {
                         dismiss()
                     }
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Sauvegarder") {
                         saveChanges()
                     }
@@ -144,43 +146,51 @@ struct EditItemView: View {
         }
         .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
             Button("Prendre une photo") {
-                imageSourceType = .camera
-                showingImagePicker = true
+                showingCamera = true
             }
             Button("Choisir dans la bibliothèque") {
-                imageSourceType = .photoLibrary
-                showingImagePicker = true
+                showingPhotosPicker = true
             }
             Button("Annuler", role: .cancel) { }
         }
-        .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $inputImage, sourceType: imageSourceType)
+        .photosPicker(isPresented: $showingPhotosPicker, selection: $selectedPhoto, matching: .images)
+        .sheet(isPresented: $showingCamera) {
+            ImagePicker(image: $inputImage, sourceType: .camera)
         }
-        .onChange(of: inputImage) { newImage in
-            guard let image = newImage else { return }
-            processImage(image)
-        }
-    }
-
-    private func processImage(_ image: UIImage) {
-        isProcessingImage = true
-        Task {
-            if let processedImage = await ImageProcessor.removeBackground(from: image),
-               let data = processedImage.pngData() {
-                await MainActor.run {
-                    self.imageData = data
-                    self.isProcessingImage = false
+        .onChange(of: selectedPhoto) {
+            Task {
+                if let item = selectedPhoto,
+                   let data = try? await item.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    await processImage(uiImage)
                 }
-            } else if let data = image.jpegData(compressionQuality: 0.8) {
-                // Fallback to original image if processing fails
-                await MainActor.run {
-                    self.imageData = data
-                    self.isProcessingImage = false
+            }
+        }
+        .onChange(of: inputImage) {
+            if let image = inputImage {
+                Task {
+                    await processImage(image)
                 }
             }
         }
     }
     
+    private func processImage(_ image: UIImage) async {
+        isProcessingImage = true
+        if let processedImage = await ImageProcessor.removeBackground(from: image),
+           let data = processedImage.pngData() {
+            await MainActor.run {
+                self.imageData = data
+                self.isProcessingImage = false
+            }
+        } else if let data = image.jpegData(compressionQuality: 0.8) {
+            await MainActor.run {
+                self.imageData = data
+                self.isProcessingImage = false
+            }
+        }
+    }
+
     private func saveChanges() {
         var updatedItem = Item(
             name: name,
@@ -193,7 +203,6 @@ struct EditItemView: View {
             notes: notes
         )
         
-        // Preserve the original ID to update the existing record
         updatedItem.id = item.id
 
         wardrobeManager.updateItem(updatedItem)
@@ -201,18 +210,16 @@ struct EditItemView: View {
     }
 }
 
-struct EditItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleItem = Item(
-            name: "T-shirt blanc",
-            brand: "Zara",
-            category: .top,
-            color: "Blanc",
-            size: "M",
-            season: .summer
-        )
+#Preview {
+    let sampleItem = Item(
+        name: "T-shirt blanc",
+        brand: "Zara",
+        category: .top,
+        color: "Blanc",
+        size: "M",
+        season: .summer
+    )
 
-        return EditItemView(item: sampleItem)
-            .environmentObject(WardrobeManager())
-    }
+    return EditItemView(item: sampleItem)
+        .environmentObject(WardrobeManager())
 }

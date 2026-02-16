@@ -8,7 +8,7 @@ struct ItemDetailView: View {
     @State private var showingDeleteAlert = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     if let imageData = item.imageData,
@@ -104,13 +104,13 @@ struct ItemDetailView: View {
             .navigationTitle("Détails")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Fermer") {
                         dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Modifier") {
                             showingEditView = true
@@ -174,7 +174,7 @@ struct InfoBadge: View {
     }
 }
 
-struct ItemDetailView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     let sampleItem = Item(
         name: "T-shirt blanc",
         brand: "Zara",
@@ -191,5 +191,3 @@ struct ItemDetailView_Previews: PreviewProvider { static var previews: some View
 
 
 
-
-}

@@ -21,7 +21,7 @@ struct CreateOutfitView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 Form {
                     Section("Informations de l'outfit") {
@@ -162,7 +162,7 @@ struct CreateOutfitView: View {
             .navigationTitle("Nouvel outfit")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button(action: {
                         dismiss()
                     }) {
@@ -171,7 +171,7 @@ struct CreateOutfitView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         createOutfit()
                     }) {
@@ -308,12 +308,10 @@ struct CategoryFilterButton: ButtonStyle {
     }
 }
 
-struct CreateOutfitView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     CreateOutfitView()
         .environmentObject(WardrobeManager())
 }
 
 
 
-
-}

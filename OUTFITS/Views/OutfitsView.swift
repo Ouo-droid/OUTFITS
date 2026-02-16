@@ -49,7 +49,7 @@ struct OutfitsView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 searchAndFilterSection
                 
@@ -61,7 +61,7 @@ struct OutfitsView: View {
             }
             .navigationTitle("Mes Outfits")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Créer") {
                         showingCreateOutfit = true
                     }
@@ -191,11 +191,9 @@ struct OutfitsView: View {
     }
 }
 
-struct OutfitsView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     OutfitsView()
         .environmentObject(WardrobeManager())
 }
 
 
-
-}

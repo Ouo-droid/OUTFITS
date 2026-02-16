@@ -9,7 +9,7 @@ struct OutfitDetailView: View {
     @State private var showingMarkAsWornAlert = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     outfitHeader
@@ -25,13 +25,13 @@ struct OutfitDetailView: View {
             .navigationTitle("Détails")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Fermer") {
                         dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Modifier") {
                             showingEditView = true
@@ -315,7 +315,7 @@ struct EditOutfitView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Text("Modification d'outfit")
                     .font(.title.bold())
@@ -330,13 +330,13 @@ struct EditOutfitView: View {
             .navigationTitle("Modifier l'outfit")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Annuler") {
                         dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Sauvegarder") {
                         dismiss()
                     }
@@ -346,7 +346,7 @@ struct EditOutfitView: View {
     }
 }
 
-struct OutfitDetailView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     let sampleOutfit = Outfit(
         name: "Look décontracté",
         items: [],
@@ -358,6 +358,4 @@ struct OutfitDetailView_Previews: PreviewProvider { static var previews: some Vi
     
     return OutfitDetailView(outfit: sampleOutfit)
         .environmentObject(WardrobeManager())
-}
-
 }

@@ -6,7 +6,7 @@ struct DashboardView: View {
     @State private var showingCreateOutfit = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     headerSection
@@ -21,7 +21,7 @@ struct DashboardView: View {
             }
             .navigationTitle("Mon Dressing")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Ajouter un article") {
                             showingAddItem = true
@@ -269,9 +269,7 @@ struct EmptyStateView: View {
     }
 }
 
-struct DashboardView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     DashboardView()
         .environmentObject(WardrobeManager())
-}
-
 }

@@ -5,7 +5,7 @@ struct FavoritesView: View {
     @State private var selectedTab = 0
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 Picker("Favoris", selection: $selectedTab) {
                     Text("Outfits").tag(0)
@@ -86,10 +86,8 @@ struct FavoritesView: View {
     }
 }
 
-struct FavoritesView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     FavoritesView()
         .environmentObject(WardrobeManager())
 }
 
-
-}

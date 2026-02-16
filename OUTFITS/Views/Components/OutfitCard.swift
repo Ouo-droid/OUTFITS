@@ -83,7 +83,7 @@ struct OutfitCard: View {
     }
 }
 
-struct OutfitCard_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     let sampleOutfit = Outfit(
         name: "Look décontracté",
         items: [],
@@ -97,5 +97,3 @@ struct OutfitCard_Previews: PreviewProvider { static var previews: some View {
 }
 
 
-
-}

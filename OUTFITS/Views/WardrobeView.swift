@@ -45,7 +45,7 @@ struct WardrobeView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 searchAndFilterSection
                 
@@ -57,7 +57,7 @@ struct WardrobeView: View {
             }
             .navigationTitle("Mon Dressing")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Ajouter") {
                         showingAddItem = true
                     }
@@ -204,11 +204,9 @@ struct FilterChip: View {
     }
 }
 
-struct WardrobeView_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     WardrobeView()
         .environmentObject(WardrobeManager())
 }
 
 
-
-}

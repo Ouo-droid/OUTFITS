@@ -68,7 +68,7 @@ struct ItemCard: View {
     }
 }
 
-struct ItemCard_Previews: PreviewProvider { static var previews: some View {
+#Preview {
     let sampleItem = Item(
         name: "T-shirt blanc",
         brand: "Zara",
@@ -83,5 +83,3 @@ struct ItemCard_Previews: PreviewProvider { static var previews: some View {
 }
 
 
-
-}
