@@ -45,7 +45,7 @@ struct WardrobeView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 searchAndFilterSection
                 
@@ -57,7 +57,7 @@ struct WardrobeView: View {
             }
             .navigationTitle("Mon Dressing")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Ajouter") {
                         showingAddItem = true
                     }
@@ -154,8 +154,8 @@ struct WardrobeView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun article trouvé")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title2.bold())
+
             
             Text("Ajoutez votre premier article à votre dressing")
                 .font(.subheadline)
@@ -195,7 +195,7 @@ struct FilterChip: View {
     var body: some View {
         Text(title)
             .font(.caption)
-            .fontWeight(.medium)
+
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(isSelected ? Color.purple : Color(.systemGray5))

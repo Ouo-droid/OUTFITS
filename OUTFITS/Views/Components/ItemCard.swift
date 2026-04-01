@@ -22,7 +22,7 @@ struct ItemCard: View {
                             .frame(width: 120, height: 120)
                         
                         Image(systemName: item.category.icon)
-                            .font(.title)
+                            .font(.title.bold())
                             .foregroundColor(.secondary)
                     }
                 }
@@ -30,7 +30,7 @@ struct ItemCard: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(item.name)
                         .font(.caption)
-                        .fontWeight(.medium)
+
                         .lineLimit(1)
                     
                     Text(item.brand)
@@ -40,7 +40,7 @@ struct ItemCard: View {
                     
                     HStack {
                         Circle()
-                            .fill(Color(item.color.lowercased()) ?? .gray)
+                            .fill(Color(item.color.lowercased()))
                             .frame(width: 12, height: 12)
                         
                         Text(item.color)

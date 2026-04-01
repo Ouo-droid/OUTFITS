@@ -21,7 +21,7 @@ struct CreateOutfitView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 Form {
                     Section("Informations de l'outfit") {
@@ -80,7 +80,7 @@ struct CreateOutfitView: View {
                     HStack {
                         Text("Articles sélectionnés")
                             .font(.headline)
-                            .fontWeight(.semibold)
+                            // .fontWeight(.semibold) iOS 16+
                         
                         Spacer()
                         
@@ -116,7 +116,7 @@ struct CreateOutfitView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Choisir des articles")
                         .font(.headline)
-                        .fontWeight(.semibold)
+                        // .fontWeight(.semibold) iOS 16+
                         .padding(.horizontal)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -162,15 +162,20 @@ struct CreateOutfitView: View {
             .navigationTitle("Nouvel outfit")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Annuler") {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Text("Annuler")
                     }
                 }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Créer") {
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
                         createOutfit()
+                    }) {
+                        Text("Créer")
                     }
                     .disabled(outfitName.isEmpty || selectedItems.isEmpty)
                 }
@@ -293,8 +298,7 @@ struct CategoryFilterButton: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.caption)
-            .fontWeight(.medium)
+            .font(.system(size: 12, weight: .medium)) // Replaces .font(.caption).fontWeight(.medium)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(isSelected ? Color.purple : Color(.systemGray5))

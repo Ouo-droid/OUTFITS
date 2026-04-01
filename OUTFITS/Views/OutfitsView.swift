@@ -49,7 +49,7 @@ struct OutfitsView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 searchAndFilterSection
                 
@@ -61,7 +61,7 @@ struct OutfitsView: View {
             }
             .navigationTitle("Mes Outfits")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Créer") {
                         showingCreateOutfit = true
                     }
@@ -158,8 +158,8 @@ struct OutfitsView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun outfit trouvé")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title2.bold())
+
             
             Text("Créez votre premier outfit !")
                 .font(.subheadline)
@@ -179,7 +179,7 @@ struct OutfitsView: View {
     private var outfitsGrid: some View {
         ScrollView {
             LazyVGrid(columns: [
-                GridItem(.flexible()),
+                GridItem(.flexible())
                 GridItem(.flexible())
             ], spacing: 16) {
                 ForEach(filteredOutfits) { outfit in

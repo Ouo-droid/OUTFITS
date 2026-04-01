@@ -6,7 +6,7 @@ struct DashboardView: View {
     @State private var showingCreateOutfit = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     headerSection
@@ -21,7 +21,7 @@ struct DashboardView: View {
             }
             .navigationTitle("Mon Dressing")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Ajouter un article") {
                             showingAddItem = true
@@ -50,15 +50,15 @@ struct DashboardView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Bonjour !")
-                        .font(.title2)
-                        .fontWeight(.bold)
+                        .font(.title2.bold())
+
                     Text("Organisez votre style")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
                 Spacer()
                 Image(systemName: "sparkles")
-                    .font(.title)
+                    .font(.title.bold())
                     .foregroundColor(.purple)
             }
             
@@ -93,8 +93,8 @@ struct DashboardView: View {
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Actions rapides")
-                .font(.headline)
-                .fontWeight(.semibold)
+                .font(.headline.bold())
+
             
             HStack(spacing: 12) {
                 QuickActionButton(
@@ -120,8 +120,8 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Outfits récents")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .font(.headline.bold())
+
                 Spacer()
                 NavigationLink("Voir tout") {
                     OutfitsView()
@@ -154,8 +154,8 @@ struct DashboardView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("Articles récents")
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                    .font(.headline.bold())
+
                 Spacer()
                 NavigationLink("Voir tout") {
                     WardrobeView()
@@ -194,12 +194,12 @@ struct StatCard: View {
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: icon)
-                .font(.title2)
+                .font(.title2.bold())
                 .foregroundColor(color)
             
             Text(value)
-                .font(.title2)
-                .fontWeight(.bold)
+                .font(.title2.bold())
+
             
             Text(title)
                 .font(.caption)
@@ -222,12 +222,12 @@ struct QuickActionButton: View {
         Button(action: action) {
             VStack(spacing: 8) {
                 Image(systemName: icon)
-                    .font(.title2)
+                    .font(.title2.bold())
                     .foregroundColor(color)
                 
                 Text(title)
                     .font(.caption)
-                    .fontWeight(.medium)
+
                     .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity)
@@ -254,8 +254,8 @@ struct EmptyStateView: View {
                 .foregroundColor(.secondary)
             
             Text(title)
-                .font(.headline)
-                .fontWeight(.semibold)
+                .font(.headline.bold())
+
             
             Text(subtitle)
                 .font(.subheadline)

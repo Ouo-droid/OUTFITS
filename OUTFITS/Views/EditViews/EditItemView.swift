@@ -13,9 +13,13 @@ struct EditItemView: View {
     @State private var size: String
     @State private var season: Season
     @State private var notes: String
-    @State private var selectedPhoto: PhotosPickerItem?
     @State private var imageData: Data?
-    @State private var showingImagePicker = false
+    @State private var showingCamera = false
+    @State private var showingActionSheet = false
+    @State private var inputImage: UIImage?
+    @State private var selectedPhoto: PhotosPickerItem?
+    @State private var isProcessingImage = false
+    @State private var showingPhotosPicker = false
     
     private let commonColors = ["Blanc", "Noir", "Rouge", "Bleu", "Vert", "Jaune", "Rose", "Violet", "Orange", "Marron", "Gris", "Beige"]
     private let commonSizes = ["XS", "S", "M", "L", "XL", "XXL", "36", "38", "40", "42", "44", "46", "48"]
@@ -33,7 +37,7 @@ struct EditItemView: View {
     }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Informations générales") {
                     TextField("Nom de l'article", text: $name)
@@ -57,7 +61,7 @@ struct EditItemView: View {
                                 Circle()
                                     .fill(season.color)
                                     .frame(width: 12, height: 12)
-                                Text(season.rawValue)
+                                    Text(season.rawValue)
                             }
                             .tag(season)
                         }
@@ -85,21 +89,30 @@ struct EditItemView: View {
                 }
                 
                 Section("Photo") {
-                    if let imageData = imageData,
-                       let uiImage = UIImage(data: imageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxHeight: 200)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                showingImagePicker = true
+                    ZStack {
+                        if let imageData = imageData,
+                           let uiImage = UIImage(data: imageData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxHeight: 200)
+                                .cornerRadius(8)
+                                .onTapGesture {
+                                    showingActionSheet = true
+                                }
+                        } else {
+                            Button("Modifier la photo") {
+                                showingActionSheet = true
                             }
-                    } else {
-                        Button("Ajouter une photo") {
-                            showingImagePicker = true
+                            .foregroundColor(.purple)
                         }
-                        .foregroundColor(.purple)
+
+                        if isProcessingImage {
+                            Color.black.opacity(0.4)
+                                .cornerRadius(8)
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        }
                     }
                     
                     if imageData != nil {
@@ -117,13 +130,13 @@ struct EditItemView: View {
             .navigationTitle("Modifier l'article")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Annuler") {
                         dismiss()
                     }
                 }
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
+
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Sauvegarder") {
                         saveChanges()
                     }
@@ -131,18 +144,55 @@ struct EditItemView: View {
                 }
             }
         }
-        .photosPicker(isPresented: $showingImagePicker, selection: $selectedPhoto, matching: .images)
-        .onChange(of: selectedPhoto) { _, newValue in
+        .confirmationDialog("Choisir une photo", isPresented: $showingActionSheet) {
+            Button("Prendre une photo") {
+                showingCamera = true
+            }
+            Button("Choisir dans la bibliothèque") {
+                showingPhotosPicker = true
+            }
+            Button("Annuler", role: .cancel) { }
+        }
+        .photosPicker(isPresented: $showingPhotosPicker, selection: $selectedPhoto, matching: .images)
+        .sheet(isPresented: $showingCamera) {
+            ImagePicker(image: $inputImage, sourceType: .camera)
+        }
+        .onChange(of: selectedPhoto) {
             Task {
-                if let data = try? await newValue?.loadTransferable(type: Data.self) {
-                    imageData = data
+                if let item = selectedPhoto,
+                   let data = try? await item.loadTransferable(type: Data.self),
+                   let uiImage = UIImage(data: data) {
+                    await processImage(uiImage)
+                }
+            }
+        }
+        .onChange(of: inputImage) {
+            if let image = inputImage {
+                Task {
+                    await processImage(image)
                 }
             }
         }
     }
     
+    private func processImage(_ image: UIImage) async {
+        isProcessingImage = true
+        if let processedImage = await ImageProcessor.removeBackground(from: image),
+           let data = processedImage.pngData() {
+            await MainActor.run {
+                self.imageData = data
+                self.isProcessingImage = false
+            }
+        } else if let data = image.jpegData(compressionQuality: 0.8) {
+            await MainActor.run {
+                self.imageData = data
+                self.isProcessingImage = false
+            }
+        }
+    }
+
     private func saveChanges() {
-        let updatedItem = Item(
+        var updatedItem = Item(
             name: name,
             brand: brand,
             category: category,
@@ -153,19 +203,9 @@ struct EditItemView: View {
             notes: notes
         )
         
-        var finalItem = updatedItem
-        finalItem = Item(
-            name: name,
-            brand: brand,
-            category: category,
-            color: color,
-            size: size,
-            season: season,
-            imageData: imageData,
-            notes: notes
-        )
-        
-        wardrobeManager.updateItem(finalItem)
+        updatedItem.id = item.id
+
+        wardrobeManager.updateItem(updatedItem)
         dismiss()
     }
 }
@@ -179,10 +219,7 @@ struct EditItemView: View {
         size: "M",
         season: .summer
     )
-    
+
     return EditItemView(item: sampleItem)
         .environmentObject(WardrobeManager())
 }
-
-
-

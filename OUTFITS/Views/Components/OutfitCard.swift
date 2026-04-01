@@ -21,7 +21,7 @@ struct OutfitCard: View {
                     
                     VStack(spacing: 4) {
                         Image(systemName: outfit.occasion.icon)
-                            .font(.title2)
+                            .font(.title2.bold())
                             .foregroundColor(outfit.occasion.color)
                         
                         Text("\(outfit.totalItems) articles")
@@ -34,7 +34,7 @@ struct OutfitCard: View {
                     HStack {
                         Text(outfit.name)
                             .font(.caption)
-                            .fontWeight(.medium)
+
                             .lineLimit(1)
                         
                         if outfit.isFavorite {

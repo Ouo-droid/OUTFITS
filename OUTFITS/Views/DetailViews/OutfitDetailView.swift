@@ -9,7 +9,7 @@ struct OutfitDetailView: View {
     @State private var showingMarkAsWornAlert = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     outfitHeader
@@ -25,13 +25,13 @@ struct OutfitDetailView: View {
             .navigationTitle("Détails")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Fermer") {
                         dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Modifier") {
                             showingEditView = true
@@ -77,8 +77,8 @@ struct OutfitDetailView: View {
         VStack(spacing: 16) {
             HStack {
                 Text(outfit.name)
-                    .font(.title2)
-                    .fontWeight(.bold)
+                    .font(.title2.bold())
+
                 
                 Spacer()
                 
@@ -114,8 +114,8 @@ struct OutfitDetailView: View {
     private var outfitItems: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Articles (\(outfit.totalItems))")
-                .font(.headline)
-                .fontWeight(.semibold)
+                .font(.headline.bold())
+
             
             if outfit.items.isEmpty {
                 Text("Aucun article dans cet outfit")
@@ -142,8 +142,8 @@ struct OutfitDetailView: View {
     private var outfitDetails: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Informations")
-                .font(.headline)
-                .fontWeight(.semibold)
+                .font(.headline.bold())
+
             
             VStack(spacing: 12) {
                 DetailRow(
@@ -177,8 +177,8 @@ s
             if !outfit.notes.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Notes")
-                        .font(.headline)
-                        .fontWeight(.semibold)
+                        .font(.headline.bold())
+
                     
                     Text(outfit.notes)
                         .font(.body)
@@ -214,7 +214,7 @@ struct OccasionBadge: View {
             
             Text(occasion.rawValue)
                 .font(.caption)
-                .fontWeight(.medium)
+
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
@@ -234,7 +234,7 @@ struct SeasonBadge: View {
             
             Text(season.rawValue)
                 .font(.caption)
-                .fontWeight(.medium)
+
         }
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
@@ -263,7 +263,7 @@ struct OutfitItemCard: View {
                         .frame(width: 80, height: 80)
                     
                     Image(systemName: item.category.icon)
-                        .font(.title2)
+                        .font(.title2.bold())
                         .foregroundColor(.secondary)
                 }
             }
@@ -303,7 +303,7 @@ struct DetailRow: View {
             
             Text(value)
                 .font(.subheadline)
-                .fontWeight(.medium)
+
                 .foregroundColor(valueColor)
         }
     }
@@ -315,10 +315,10 @@ struct EditOutfitView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Text("Modification d'outfit")
-                    .font(.title)
+                    .font(.title.bold())
                     .padding()
                 
                 Text("Cette fonctionnalité sera disponible prochainement")
@@ -330,13 +330,13 @@ struct EditOutfitView: View {
             .navigationTitle("Modifier l'outfit")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("Annuler") {
                         dismiss()
                     }
                 }
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("Sauvegarder") {
                         dismiss()
                     }

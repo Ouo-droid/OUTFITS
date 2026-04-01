@@ -5,7 +5,7 @@ struct FavoritesView: View {
     @State private var selectedTab = 0
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 Picker("Favoris", selection: $selectedTab) {
                     Text("Outfits").tag(0)
@@ -34,7 +34,7 @@ struct FavoritesView: View {
             } else {
                 ScrollView {
                     LazyVGrid(columns: [
-                        GridItem(.flexible()),
+                        GridItem(.flexible())
                         GridItem(.flexible())
                     ], spacing: 16) {
                         ForEach(wardrobeManager.favoriteOutfits) { outfit in
@@ -54,8 +54,8 @@ struct FavoritesView: View {
                 .foregroundColor(.secondary)
             
             Text("Articles favoris")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title2.bold())
+
             
             Text("Cette fonctionnalité sera disponible prochainement")
                 .font(.subheadline)
@@ -73,8 +73,8 @@ struct FavoritesView: View {
                 .foregroundColor(.secondary)
             
             Text("Aucun favori")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title2.bold())
+
             
             Text("Marquez vos outfits préférés avec un cœur")
                 .font(.subheadline)
